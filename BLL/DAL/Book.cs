@@ -11,6 +11,7 @@ namespace BLL.DAL
         [StringLength(75)]
         public string Name { get; set; }
         public short? NumberOfPages { get; set; }
+        [Required(ErrorMessage = "Date is required")]
         public DateTime? PublishDate { get; set; }
         [Precision(18, 2)]
         [Required(ErrorMessage = "Price is required")]

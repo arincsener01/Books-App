@@ -16,6 +16,5 @@ namespace BLL.Models
         public string IsTopSeller => Record.IsTopSeller ? "Yes" : "No";
         [Display(Name = "Author")]
         public string AuthorName => $"{Record.Author?.Name} {Record.Author?.Surname}".Trim();
-
     }
 }
