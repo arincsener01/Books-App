@@ -1,7 +1,3 @@
-Here is the formatted README file for your Books App:
-
----
-
 # Books App
 
 ## Overview
