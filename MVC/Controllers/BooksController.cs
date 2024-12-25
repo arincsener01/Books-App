@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MVC.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class BooksController : MvcController
     {
         // Service injections:
