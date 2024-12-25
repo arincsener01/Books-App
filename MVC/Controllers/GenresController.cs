@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Controllers.Bases;
 using BLL.Services;
 using BLL.Models;
+using Microsoft.AspNetCore.Authorization;
 
 // Generated from Custom Template.
 
 namespace MVC.Controllers
 {
+    //[Authorize(Roles = "Admin")]
     public class GenresController : MvcController
     {
         // Service injections:
@@ -54,6 +56,8 @@ namespace MVC.Controllers
         }
 
         // GET: Genres/Create
+        [Authorize(Roles = "Admin")]
+
         public IActionResult Create()
         {
             SetViewData();
@@ -61,6 +65,8 @@ namespace MVC.Controllers
         }
 
         // POST: Genres/Create
+        [Authorize(Roles = "Admin")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(GenresModel genre)
@@ -81,6 +87,7 @@ namespace MVC.Controllers
         }
 
         // GET: Genres/Edit/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
@@ -90,6 +97,7 @@ namespace MVC.Controllers
         }
 
         // POST: Genres/Edit
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(GenresModel genre)
@@ -110,6 +118,7 @@ namespace MVC.Controllers
         }
 
         // GET: Genres/Delete/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
@@ -118,6 +127,7 @@ namespace MVC.Controllers
         }
 
         // POST: Genres/Delete
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)

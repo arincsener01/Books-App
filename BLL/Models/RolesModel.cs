@@ -1,4 +1,5 @@
-﻿using BLL.DAL;
+﻿// No need for that class, it's just a wrapper for the Role class, and it's not used anywhere in the project
+using BLL.DAL;
 
 namespace BLL.Models
 {

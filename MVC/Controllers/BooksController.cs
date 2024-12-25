@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BLL.Controllers.Bases;
 using BLL.Services;
 using BLL.Models;
+using Microsoft.AspNetCore.Authorization;
 
 // Generated from Custom Template.
 
 namespace MVC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class BooksController : MvcController
     {
         // Service injections:
@@ -15,24 +17,25 @@ namespace MVC.Controllers
         private readonly IAuthorsService _authorService;
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-        //private readonly IManyToManyRecordService _ManyToManyRecordService;
+        private readonly IGenresService _genreService;
 
         public BooksController(
 			IBooksService bookService
             , IAuthorsService authorService
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //, IManyToManyRecordService ManyToManyRecordService
+            , IGenresService genreService
         )
         {
             _bookService = bookService;
             _authorService = authorService;
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //_ManyToManyRecordService = ManyToManyRecordService;
+            _genreService = genreService;
         }
 
         // GET: Books
+        [AllowAnonymous]
         public IActionResult Index()
         {
             // Get collection service logic:
@@ -65,10 +68,11 @@ namespace MVC.Controllers
     );
 
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-            //ViewBag.ManyToManyRecordIds = new MultiSelectList(_ManyToManyRecordService.Query().ToList(), "Record.Id", "Name");
+            ViewBag.GenreIds = new MultiSelectList(_genreService.Query().ToList(), "Record.Id", "Name");
         }
 
         // GET: Books/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             SetViewData();
@@ -76,6 +80,7 @@ namespace MVC.Controllers
         }
 
         // POST: Books/Create
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(BooksModel book)
@@ -96,6 +101,7 @@ namespace MVC.Controllers
         }
 
         // GET: Books/Edit/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
@@ -105,6 +111,7 @@ namespace MVC.Controllers
         }
 
         // POST: Books/Edit
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(BooksModel book)
@@ -125,6 +132,7 @@ namespace MVC.Controllers
         }
 
         // GET: Books/Delete/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
@@ -133,6 +141,7 @@ namespace MVC.Controllers
         }
 
         // POST: Books/Delete
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)

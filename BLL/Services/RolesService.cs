@@ -1,4 +1,5 @@
-﻿using BLL.DAL;
+﻿// No need for this service either, it's just a wrapper for the Role class, and it's not used anywhere in the project
+using BLL.DAL;
 using BLL.Models;
 using BLL.Services.Bases;
 using Microsoft.AspNetCore.Mvc.Controllers;

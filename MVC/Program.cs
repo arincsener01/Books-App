@@ -1,21 +1,45 @@
 using BLL.DAL;
+using BLL.Models;
 using BLL.Services;
+using BLL.Services.Bases;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// AppSettings
+var appSettingsSection = builder.Configuration.GetSection(nameof(AppSettings));
+appSettingsSection.Bind(new AppSettings());
+
+var connectionString = builder.Configuration.GetConnectionString("Db");
+builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionString));
 //IoC container:
-string conncetionString = "server=(localdb)\\mssqllocaldb;database=BooksAppDB;trusted_connection=true";
-builder.Services.AddDbContext<Db>(options => options.UseSqlServer(conncetionString));
+//string conncetionString = "server=(localdb)\\mssqllocaldb;database=BooksAppDB;trusted_connection=true";
+//builder.Services.AddDbContext<Db>(options => options.UseSqlServer(conncetionString));
+// I have the service as generic and the normal way. I just wanted to show both.
 builder.Services.AddScoped<IAuthorsService, AuthorsService>();
 builder.Services.AddScoped<IBooksService, BooksService>();
 builder.Services.AddScoped<IGenresService, GenresService>();
-builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<IService<User, UsersModel>, UserService>();
 builder.Services.AddScoped<IRolesService, RolesService>();
-builder.Services.AddScoped<IBookGenresService, BookGenresService>();
+//builder.Services.AddScoped<IService<Genre, GenresModel>, IGenresService, GenresService>();
+
+//builder.Services.AddHttpContextAccessor();
+//builder.Services.AddSingleton<HttpServiceBase, HttpService>();
+
+// Authentication:
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Users/Login";
+        options.AccessDeniedPath = "/Users/Login";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        options.SlidingExpiration = true;
+    });
 
 var app = builder.Build();
 
@@ -31,6 +55,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Authentication
+app.UseAuthentication();
 
 app.UseAuthorization();
 

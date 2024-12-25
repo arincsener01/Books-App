@@ -75,17 +75,17 @@ namespace BLL.Services
             if (_db.Books.Any(x => x.Name.ToUpper() == record.Name.ToUpper() && x.Id != record.Id))
                 return Error("Another book with the same name already exists.");
 
-            var entity = _db.Books.SingleOrDefault(x => x.Id == record.Id);
+            var entity = _db.Books.Include(p => p.BookGenres).SingleOrDefault(x => x.Id == record.Id);
             if (entity == null)
                 return Error("Book not found.");
-
+            _db.BookGenres.RemoveRange(entity.BookGenres);
             entity.Name = record.Name;
             entity.NumberOfPages = record.NumberOfPages;
             entity.PublishDate = record.PublishDate;
             entity.Price = record.Price;
             entity.IsTopSeller = record.IsTopSeller;
             entity.AuthorId = record.AuthorId;
-
+            entity.BookGenres = record.BookGenres;
             _db.Books.Update(entity);
             _db.SaveChanges();
             return Success("Book updated successfully.");

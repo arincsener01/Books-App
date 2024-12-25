@@ -1,0 +1,84 @@
+﻿@* @model UsersModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h3>@ViewBag.Title</h3>
+<hr />
+
+<form asp-action="Login">
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-2">
+                <label asp-for="UserName"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="Record.UserName" class="form-control" />
+                <span asp-validation-for="Record.UserName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-2">
+                <label asp-for="Password"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="Record.Password" class="form-control" type="password" />
+                <span asp-validation-for="Record.Password" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </div>
+    </div>
+</form> *@
+
+@model UsersModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h3>@ViewBag.Title</h3>
+<hr />
+
+@if (ViewData["LoginError"] != null)
+{
+    <div class="alert alert-danger">
+        @ViewData["LoginError"]
+    </div>
+}
+
+<form asp-action="Login">
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-2">
+                <label asp-for="UserName"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="Record.UserName" class="form-control" />
+                <span asp-validation-for="Record.UserName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-2">
+                <label asp-for="Password"></label>
+            </div>
+            <div class="col-4">
+                <input asp-for="Record.Password" class="form-control" type="password" />
+                <span asp-validation-for="Record.Password" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -73,21 +73,20 @@
         </div>
     </div>
 
-@* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. *@
-    @*
+    @* Added after the Genre property was added to the Book model. *@
     <div class="row mb-3">
         <div class="col-2 fw-bold">
-            <b>@Html.DisplayNameFor(model => model.ManyToManyRecords)</b>
+            <b>@Html.DisplayNameFor(model => model.Genres)</b>
         </div>
         <div class="col-10">
-            @Html.Raw(Model.ManyToManyRecords)
+            @Html.Raw(Model.Genres)
         </div>
     </div>
-    *@
+   
 
     <hr /> 
-    <a asp-action="Edit" asp-route-id="@Model.Record.Id">Edit</a>&nbsp;|&nbsp;
-    <a asp-action="Delete" asp-route-id="@Model.Record.Id">Delete</a>&nbsp;|&nbsp;
+  @*   <a asp-action="Edit" asp-route-id="@Model.Record.Id">Edit</a>&nbsp;|&nbsp;
+    <a asp-action="Delete" asp-route-id="@Model.Record.Id">Delete</a>&nbsp;|&nbsp; *@
     <a asp-action="Index">Back to List</a>
 </div>
 }

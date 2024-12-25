@@ -1,4 +1,5 @@
 ﻿using BLL.DAL;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace BLL.Models
@@ -16,5 +17,9 @@ namespace BLL.Models
         public string IsTopSeller => Record.IsTopSeller ? "Yes" : "No";
         [Display(Name = "Author")]
         public string AuthorName => $"{Record.Author?.Name} {Record.Author?.Surname}".Trim();
+        //before the string.Join and Break, it was giving an error
+        public string Genres => string.Join("<br>", Record.BookGenres?.Select(po => po.Genre?.Name));
+        [Display(Name = "Genres")]
+        public List<int> GenreIds { get => Record.BookGenres?.Select(bo => bo.GenreId).ToList(); set => Record.BookGenres = value.Select(v => new BookGenre() { GenreId = v }).ToList(); }
     }
 }
